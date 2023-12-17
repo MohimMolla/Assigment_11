@@ -22,29 +22,14 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" class="form-control" id="description" name="description"
-                            value="{{ $product->description }}">
-                        @error('description')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category</label>
-                        <input type="text" class="form-control" id="category" name="category"
-                            value="{{ $product->category }}">
-                        @error('category')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    {{--<div class="form-group">
-                        <label for="quantity">Quantity</label>
+                        <label for="quantity">Price</label>
                         <input type="number" class="form-control" id="quantity" name="quantity"
-                            value="{{ old('quantity') }}">
-		        @error('quantity')
+                            value="{{ $product->quantity }}">
+                        @error('price')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>--}}
+                    </div>
+                    
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

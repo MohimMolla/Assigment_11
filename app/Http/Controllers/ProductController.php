@@ -12,9 +12,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-       $products = Product::all();
-       return view('admin.product.all',compact('products'));
-       
+        $products = Product::all();
+        return view('admin.product.all', compact('products'));
     }
 
     /**
@@ -30,17 +29,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-         $request->all();
-       $request->validate([
-        'name' => 'required',
-        'price' => 'required',
-        'description' => 'required',
-        //'quantity' => 'required',
-        
-       ]);
-     $product = Product::create($request->all());
-     return redirect()->route('product.index')->with("message", "Product Created Success");
-       
+        $request->all();
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            //'quantity' => 'required',
+
+        ]);
+        $product = Product::create($request->all());
+        return redirect()->route('product.index')->with("message", "Product Created Success");
     }
 
     /**
@@ -57,7 +55,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //$product = Product::find($product);
-        return view('admin.product.edit',compact('product'));
+        return view('admin.product.edit', compact('product'));
     }
 
     /**
@@ -67,7 +65,6 @@ class ProductController extends Controller
     {
         $product->update($request->all());
         return redirect()->route('product.index')->with("message", "Product Update Success");
-
     }
 
     /**
@@ -76,5 +73,24 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function sellshow()
+    {
+        return view('admin.product.sell');
+    }
+    public function sell($productId, $quantity)
+    {
+        $product = Product::findOrFail($productId);
+
+        if ($product->quantity >= $quantity) {
+            $product->decrement('quantity', $quantity);
+
+            // Update sales figures or perform other actions
+
+            return redirect('/')->with('success', 'Product sold successfully!');
+        } else {
+            return redirect('/')->with('error', 'Insufficient quantity to sell.');
+        }
     }
 }

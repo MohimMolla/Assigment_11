@@ -20,3 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::resources([
     'product' => ProductController::class,
 ]);
+
+Route::get('/sellshow', [ProductController::class, 'sellshow']);
+//Route::post('/sell', [ProductController::class, 'sell']);
+Route::post('/product/sell/{id}/{quantity}', [ProductController::class, 'sell']);
+
