@@ -75,22 +75,31 @@ class ProductController extends Controller
         //
     }
 
-    public function sellshow()
+    public function sellshow($id)
     {
-        return view('admin.product.sell');
+        $product = Product::find($id);
+        return view('admin.product.sell', compact('product'));
     }
-    public function sell($productId, $quantity)
+    public function sell(Request $request, $productId, $quantity)
     {
+        $quantity = $request->input('quantity');
         $product = Product::findOrFail($productId);
 
         if ($product->quantity >= $quantity) {
-            $product->decrement('quantity', $quantity);
+            $product->quantity -= $quantity;
+            $product->save();
 
             // Update sales figures or perform other actions
 
-            return redirect('/')->with('success', 'Product sold successfully!');
+            return redirect('product')->with('message', 'Product sold successfully!');
         } else {
-            return redirect('/')->with('error', 'Insufficient quantity to sell.');
+            return redirect()->back()->with('message', 'Insufficient quantity to sell.');
         }
+    }
+    public function delete($id)
+    {
+         $product = Product::find($id);
+         $product->delete();
+         return redirect()->back()->with('message', 'Product Delete successfully.');
     }
 }

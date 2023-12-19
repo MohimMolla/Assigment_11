@@ -21,7 +21,9 @@ Route::resources([
     'product' => ProductController::class,
 ]);
 
-Route::get('/sellshow', [ProductController::class, 'sellshow']);
+Route::get('/sellshow/{id}', [ProductController::class, 'sellshow']);
 //Route::post('/sell', [ProductController::class, 'sell']);
 Route::post('/product/sell/{id}/{quantity}', [ProductController::class, 'sell']);
+
+Route::get('/delet-product/{id}', [ProductController::class, 'delete']);
 
